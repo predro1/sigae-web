@@ -5,7 +5,14 @@ class TabelaHash:
         
     def funcao_hash(self, id):
         return id % self.tamanho
-    
+
+    def inserir(self, id, nome):
+        indice = self.funcao_hash(id)
+        self.tabela[indice].append([id, nome])
 paciente = TabelaHash()
 
-print(paciente.funcao_hash(101))
+paciente.inserir(101, "Ana")
+paciente.inserir(102, "Bruno")
+
+print(paciente.tabela)
+ 
