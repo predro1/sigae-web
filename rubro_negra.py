@@ -123,5 +123,22 @@ class DecaCampeao: #Arvore Rubro Negra
 
         self.raiz.cor = MENGO #regra 2: raiz sempre negra
 
-    
+    def ordem(self):
+        resultado = []
+
+        def _percorre(no):
+            if no == self.NIL:
+                return
+            _percorre(no.esq)
+            resultado.append({
+                "id": no.id,
+                "chave": no.chave,
+                "cor": "FLA" if no.cor == FLA else "MENGO",
+                "dados": no.dados
+            })
+            _percorre(no.dir)
+
+        _percorre(self.raiz)
+        return resultado
+        
 ArvoreRubroNegra = DecaCampeao
