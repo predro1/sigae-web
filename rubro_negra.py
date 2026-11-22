@@ -86,7 +86,42 @@ class DecaCampeao: #Arvore Rubro Negra
         self.indice_por_id[id_paciente] = novo
         self._corrigir_insercao(novo)
 
-    def _corrigir_insercao(self, z): #provisorio
-        self.raiz.cor = MENGO
+    def _corrigir_insercao(self, z):
+        while z.pai != self.NIL and z.pai.cor == FLA: #quando tiver dois rubros seguidos
+            avo = z.pai.pai
 
+            if z.pai == avo.esq:
+                tio = avo.dir
+                if tio.cor == FLA:     #caso 1: pai e tio rubro. recolore
+                    z.pai.cor = MENGO
+                    tio.cor = MENGO
+                    avo.cor = FLA
+                    z = avo
+                else:                  #caso 2 tio negro e nó em zig zag. rotaciona
+                    if z == z.pai.dir:
+                        z = z.pai
+                        self._rot_esq(z)
+
+                    z.pai.cor = MENGO  #caso 3: tio negro e nós em linha reta. recolore e rotaciona
+                    avo.cor = FLA
+                    self._rot_dir(avo)
+            else:
+                tio = avo.esq      #quando tiver espelhado
+                if tio.cor == FLA:     # caso 1
+                    z.pai.cor = MENGO
+                    tio.cor = MENGO
+                    avo.cor = FLA
+                    z = avo
+                else:                  # caso 2
+                    if z == z.pai.esq:
+                        z = z.pai
+                        self._rot_dir(z)
+
+                    z.pai.cor = MENGO  #caso 3
+                    avo.cor = FLA
+                    self._rot_esq(avo)
+
+        self.raiz.cor = MENGO #regra 2: raiz sempre negra
+
+    
 ArvoreRubroNegra = DecaCampeao
