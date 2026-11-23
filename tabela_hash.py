@@ -8,6 +8,12 @@ class TabelaHash:
 
     def inserir(self, id, nome):
         indice = self.funcao_hash(id)
+
+        for paciente in self.tabela[indice]:
+            if paciente[0] == id:
+                print(f"Paciente com ID {id} já existe.")
+                return
+
         self.tabela[indice].append([id, nome])
 
     def buscar(self, id):
