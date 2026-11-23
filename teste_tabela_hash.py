@@ -50,3 +50,19 @@ print("Tamanho: ", nova_tabela.tamanho)
 
 print(nova_tabela.buscar(101))
 print(nova_tabela.buscar(106))
+
+
+print(" 9 - Inserindo mais pacientes para testar redimensionamento automático")
+teste = TabelaHash()
+
+teste.inserir(101, "Ana")
+teste.inserir(102, "Bruno")
+teste.inserir(106, "Carlos")
+
+print("Tabela antes do redimensionamento automático:", teste.tabela)
+teste.inserir(103, "Diana")
+
+print("Tabela após o redimensionamento automático:", teste.tabela)
+print("Tamanho: ", teste.tamanho)
+print('busca paciente 106:', teste.buscar(106))
+print('busca paciente 103:', teste.buscar(103))
