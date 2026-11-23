@@ -14,7 +14,7 @@ class TabelaHash:
                 print(f"Paciente com ID {id} já existe.")
                 return
 
-        self.tabela[indice].append([id, nome])
+        self.tabela[indice].append([id, nome]) #tra
 
     def buscar(self, id):
         indice = self.funcao_hash(id)
@@ -23,12 +23,26 @@ class TabelaHash:
                 return paciente 
         return None
 
+    def atualizar(self, id, novo_nome):
+        indice = self.funcao_hash(id)
+
+        for paciente in self.tabela[indice]:
+            if paciente[0] == id:
+                paciente[1] = novo_nome
+                return
+        
+        print(f"Paciente com ID {id} não encontrado.")
+
 paciente = TabelaHash()
 
 paciente.inserir(101, "Ana")
 paciente.inserir(102, "Bruno")
+paciente.inserir(106, "Carlos")
+paciente.inserir(101, "Ana")
 
-print(paciente.tabela)
 print(paciente.buscar(101))
-print(paciente.buscar(102))
-print(paciente.buscar(103))
+paciente.atualizar(101, "Ana Clara")
+
+paciente.atualizar(999, "Maria")
+print(paciente.buscar(101))
+
