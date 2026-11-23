@@ -42,17 +42,11 @@ class TabelaHash:
             
         print(f"Paciente com ID {id} não encontrado.")
 
-paciente = TabelaHash()
-
-paciente.inserir(101, "Ana")
-paciente.inserir(102, "Bruno")
-paciente.inserir(106, "Carlos")
-paciente.inserir(101, "Ana")
-
-paciente.remover(101)
-
-print("Atualzada:", paciente.tabela)
-print("Buscando Ana:", paciente.buscar(101))
-print("Buscando Carlos:", paciente.buscar(106))
-paciente.atualizar(999, "Maria")
-
+    def redimensionar(self):
+        tamanho_antigo = self.tabela
+        self.tamanho *= 2
+        self.tabela = [[] for i in range(self.tamanho)]
+        
+        for lista in tamanho_antigo:
+            for paciente in lista:
+                self.inserir(paciente[0], paciente[1])

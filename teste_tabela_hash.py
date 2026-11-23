@@ -35,3 +35,18 @@ print(paciente.buscar(106))
 print(" 7 - Inserindo e removendo paciente inexistente")
 paciente.atualizar(999, "Maria")
 paciente.remover(999)
+
+print(" 8 - Redimensionando tabela")
+nova_tabela = TabelaHash()
+nova_tabela.inserir(101, "Ana")
+nova_tabela.inserir(102, "Bruno")
+nova_tabela.inserir(106,"Carlos")
+
+print("Tabela antes do redimensionamento:", nova_tabela.tabela)
+nova_tabela.redimensionar()
+
+print("Tabela após o redimensionamento:", nova_tabela.tabela)
+print("Tamanho: ", nova_tabela.tamanho)
+
+print(nova_tabela.buscar(101))
+print(nova_tabela.buscar(106))
