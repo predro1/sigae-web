@@ -278,4 +278,44 @@ class DecaCampeao: #Arvore Rubro Negra
 
         x.cor = MENGO
 
+    def validar(self):             #Valida as 5 propriedades fundamentais da Árvore Rubro-Negra e a altura-negra.
+        if self.raiz != self.NIL and self.raiz.cor != MENGO:
+            raise AssertionError("Regra 2 violada: a raiz não é negra (MENGO).")
+
+        if self.NIL.cor != MENGO:
+            raise AssertionError("Regra 3 violada: o sentinela NIL não é negro (MENGO).")
+
+        def _verificar_no(no):
+            if no == self.NIL:
+                return 1  # Folhas NIL contam como 1 nó negro
+
+            if no.cor not in (FLA, MENGO):
+                raise AssertionError(f"Regra 1 violada: cor inválida no nó {no.id}.")
+
+            if no.cor == FLA:                # Regra 4: nó rubro não pode ter filho rubro
+                if no.esq.cor == FLA or no.dir.cor == FLA:
+                    raise AssertionError(f"Regra 4 violada: dois nós rubros (FLA) seguidos no nó {no.id}.")
+
+            if no.esq != self.NIL and no.esq.chave >= no.chave:    # Regra de ABB: ordem das chaves
+                raise AssertionError(f"Ordem ABB violada à esquerda do nó {no.id}.")
+            if no.dir != self.NIL and no.dir.chave <= no.chave:
+                raise AssertionError(f"Ordem ABB violada à direita do nó {no.id}.")
+
+            alt_esq = _verificar_no(no.esq)       # Regra 5: altura-negra deve ser idêntica nos dois lados
+            alt_dir = _verificar_no(no.dir)
+
+            if alt_esq != alt_dir:
+                raise AssertionError(
+                    f"Regra 5 violada no nó {no.id}: altura-negra esq ({alt_esq}) != dir ({alt_dir})."
+                )
+
+            return alt_esq + (1 if no.cor == MENGO else 0)
+
+        altura_negra = _verificar_no(self.raiz)
+        return {
+            "valida": True,
+            "altura_negra": altura_negra,
+            "total_pacientes": len(self.indice_por_id),
+            "rotacoes": self.rotacoes
+        }
 ArvoreRubroNegra = DecaCampeao
