@@ -227,5 +227,55 @@ class DecaCampeao: #Arvore Rubro Negra
             self._corrigir_remocao(x)
 
     def _corrigir_remocao(self, x):
-        pass                        #Provisório
+        while x != self.raiz and x.cor == MENGO:
+            if x == x.pai.esq:
+                irmao = x.pai.dir
+                if irmao.cor == FLA:   # Caso 1: irmão rubro -> rotaciona e vira Caso 2, 3 ou 4
+                    irmao.cor = MENGO
+                    x.pai.cor = FLA
+                    self._rot_esq(x.pai)
+                    irmao = x.pai.dir
+
+                if irmao.esq.cor == MENGO and irmao.dir.cor == MENGO: # Caso 2: irmão e sobrinhos negros
+                    irmao.cor = FLA
+                    x = x.pai
+                else:
+                    if irmao.dir.cor == MENGO: # Caso 3: irmão negro, sobrinho esquerdo rubro
+                      irmao.esq.cor = MENGO
+                      irmao.cor = FLA
+                      self._rot_dir(irmao)
+                      irmao = x.pai.dir
+
+                    irmao.cor = x.pai.cor      # Caso 4: irmão negro, sobrinho direito rubro
+                    x.pai.cor = MENGO
+                    irmao.dir.cor = MENGO
+                    self._rot_esq(x.pai)
+                    x = self.raiz
+            else:
+                irmao = x.pai.esq   #espelhado
+                if irmao.cor == FLA: # Caso 1
+                    irmao.cor = MENGO
+                    x.pai.cor = FLA
+                    self._rot_dir(x.pai)
+                    irmao = x.pai.esq
+
+                if irmao.dir.cor == MENGO and irmao.esq.cor == MENGO:  # Caso 2
+                    irmao.cor = FLA
+                    x = x.pai
+                else:
+                    if irmao.esq.cor == MENGO:  # Caso 3
+                        irmao.dir.cor = MENGO
+                        irmao.cor = FLA
+                        self._rot_esq(irmao)
+                        irmao = x.pai.esq
+
+                    # Caso 4
+                    irmao.cor = x.pai.cor
+                    x.pai.cor = MENGO
+                    irmao.esq.cor = MENGO
+                    self._rot_dir(x.pai)
+                    x = self.raiz
+
+        x.cor = MENGO
+
 ArvoreRubroNegra = DecaCampeao
