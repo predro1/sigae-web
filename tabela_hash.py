@@ -9,10 +9,20 @@ class TabelaHash:
     def inserir(self, id, nome):
         indice = self.funcao_hash(id)
         self.tabela[indice].append([id, nome])
+
+    def buscar(self, id):
+        indice = self.funcao_hash(id)
+        for paciente in self.tabela[indice]:
+            if paciente[0] == id:
+                return paciente 
+        return None
+
 paciente = TabelaHash()
 
 paciente.inserir(101, "Ana")
 paciente.inserir(102, "Bruno")
 
 print(paciente.tabela)
- 
+print(paciente.buscar(101))
+print(paciente.buscar(102))
+print(paciente.buscar(103))
