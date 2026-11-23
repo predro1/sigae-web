@@ -175,4 +175,57 @@ class DecaCampeao: #Arvore Rubro Negra
 
         _buscar(self.raiz)
         return encontrados
+
+
+    def _transplantar(self, u, v):  #Substitui a subárvore enraizada em u pela subárvore enraizada em v.
+        if u.pai == self.NIL:
+            self.raiz = v
+        elif u == u.pai.esq:
+            u.pai.esq = v
+        else:
+            u.pai.dir = v
+        v.pai = u.pai
+
+    def _minimo(self, no):          #Retorna o nó com a menor chave (mais à esquerda) a partir de um nó.
+        while no.esq != self.NIL:
+            no = no.esq
+        return no
+
+    def remover(self, id_paciente): #Remove um paciente da fila pelo ID em O(log n) e rebalanceia a árvore.
+        z = self.indice_por_id.get(id_paciente)
+        if not z or z == self.NIL:
+            raise ValueError(f"ID {id_paciente} não encontrado na fila de pacientes.")
+
+        del self.indice_por_id[id_paciente]
+
+        y = z
+        cor_original_y = y.cor
+
+        if z.esq == self.NIL:
+            x = z.dir
+            self._transplantar(z, z.dir)
+        elif z.dir == self.NIL:
+            x = z.esq
+            self._transplantar(z, z.esq)
+        else:
+            y = self._minimo(z.dir)
+            cor_original_y = y.cor
+            x = y.dir
+            if y.pai == z:
+                x.pai = y
+            else:
+                self._transplantar(y, y.dir)
+                y.dir = z.dir
+                y.dir.pai = y
+
+            self._transplantar(z, y)
+            y.esq = z.esq
+            y.esq.pai = y
+            y.cor = z.cor
+
+        if cor_original_y == MENGO:
+            self._corrigir_remocao(x)
+
+    def _corrigir_remocao(self, x):
+        pass                        #Provisório
 ArvoreRubroNegra = DecaCampeao
