@@ -1,5 +1,5 @@
 FLA, MENGO = 0, 1
-
+#RUBRO = FLA. NEGRO = MENGO
 class No:
     def __init__(self, chave, id_paciente=None, dados=None):
         self.chave = chave
@@ -140,5 +140,39 @@ class DecaCampeao: #Arvore Rubro Negra
 
         _percorre(self.raiz)
         return resultado
-        
+
+    def buscar_id(self, id_paciente):
+
+        no = self.indice_por_id.get(id_paciente)
+        if not no or no == self.NIL:
+            return None
+        return {
+            "id": no.id,
+            "chave": no.chave,
+            "cor": "FLA" if no.cor == FLA else "MENGO",
+            "dados": no.dados
+        }
+
+    def buscar_horario(self, horario_min):
+        encontrados = []
+        def _buscar(no):
+            if no == self.NIL:
+                return
+            hora_no = no.chave[0]
+            if horario_min < hora_no:
+                _buscar(no.esq)
+            elif horario_min > hora_no:
+                _buscar(no.dir)
+            else:
+                _buscar(no.esq)
+                encontrados.append({
+                    "id": no.id,
+                    "chave": no.chave,
+                    "cor": "FLA" if no.cor == FLA else "MENGO",
+                    "dados": no.dados
+                })
+                _buscar(no.dir)
+
+        _buscar(self.raiz)
+        return encontrados
 ArvoreRubroNegra = DecaCampeao
