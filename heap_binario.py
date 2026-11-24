@@ -22,10 +22,4 @@ class HeapBinario:
             else:
                 break
 
-fila = HeapBinario()
 
-fila.inserir(3,870,101)
-fila.inserir(1, 875,102)
-fila.inserir(2,860, 103)
-
-fila.mostrar()
