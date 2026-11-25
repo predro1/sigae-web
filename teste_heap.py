@@ -91,3 +91,20 @@ fila6.mostrar()
 
 print("ID inexistente:", fila6.remover_por_id(999))
 print("Proximo paciente:", fila6.remover())
+
+
+
+print("8- Testando ordem de remocao")
+
+fila7 = HeapBinario()
+
+fila7.inserir(3, 900, 101)
+fila7.inserir(1, 850, 102)
+fila7.inserir(2, 800, 103)
+fila7.inserir(1, 800, 104)
+fila7.inserir(1, 800, 100)
+
+print("Ordem dos pacientes removidos:")
+
+while len(fila7.heap) > 0:
+    print(fila7.remover())
