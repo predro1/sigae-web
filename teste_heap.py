@@ -108,3 +108,21 @@ print("Ordem dos pacientes removidos:")
 
 while len(fila7.heap) > 0:
     print(fila7.remover())
+
+
+
+print("9- Remocao de paciente no meio da fila")
+
+fila8 = HeapBinario()
+
+fila8.inserir(1, 800, 101)
+fila8.inserir(2, 810, 102)
+fila8.inserir(3, 820, 103)
+fila8.inserir(4, 830, 104)
+fila8.inserir(5, 840, 105)
+
+print("Paciente cancelado:", fila8.remover_por_id(103))
+
+print("Pacientes restantes em ordem:")
+while len(fila8.heap) > 0:
+    print(fila8.remover())
