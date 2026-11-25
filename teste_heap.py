@@ -71,3 +71,23 @@ fila5.mostrar()
 
 print("Paciente inexistente:", fila5.atualizar_prioridade(999, 1))
 print("Prioridade invalida:", fila5.atualizar_prioridade(102, 8))
+
+
+print("7- Removendo paciente por ID")
+
+fila6 = HeapBinario()
+
+fila6.inserir(3, 800, 101)
+fila6.inserir(1, 810, 102)
+fila6.inserir(2, 820, 103)
+
+print("Antes:")
+fila6.mostrar()
+
+print("Removido:", fila6.remover_por_id(103))
+
+print("Depois:")
+fila6.mostrar()
+
+print("ID inexistente:", fila6.remover_por_id(999))
+print("Proximo paciente:", fila6.remover())
