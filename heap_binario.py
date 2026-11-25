@@ -56,3 +56,46 @@ class HeapBinario:
             posicao = menor
 
         return paciente_removido
+
+
+    
+    def atualizar_prioridade(self, id, nova_prioridade):
+        if nova_prioridade < 1 or nova_prioridade > 5:
+            return False
+
+        for i in range(len(self.heap)):
+            if self.heap[i][2] == id:
+                self.heap[i][0] = nova_prioridade
+                posicao = i
+
+                while posicao > 0:
+                    pai = (posicao - 1) // 2
+
+                    if self.heap[posicao] < self.heap[pai]:
+                        self.heap[posicao], self.heap[pai] = self.heap[pai], self.heap[posicao]
+                        posicao = pai
+                    else:
+                        break
+
+                while True:
+                    esquerdo = 2 * posicao + 1
+                    direito = 2 * posicao + 2
+                    menor = posicao
+
+                    if esquerdo < len(self.heap):
+                        if self.heap[esquerdo] < self.heap[menor]:
+                            menor = esquerdo
+
+                    if direito < len(self.heap):
+                        if self.heap[direito] < self.heap[menor]:
+                            menor = direito
+
+                    if menor == posicao:
+                        break
+
+                    self.heap[posicao], self.heap[menor] = self.heap[menor], self.heap[posicao]
+                    posicao = menor
+
+                return True
+
+        return False

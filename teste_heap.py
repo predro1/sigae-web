@@ -49,3 +49,25 @@ fila4.inserir(1, 800, 104)
 
 print("Paciente removido:", fila4.remover())
 fila4.mostrar()
+
+
+print("6- Atualizando prioridade")
+
+fila5 = HeapBinario()
+fila5.inserir(4, 800, 101)
+fila5.inserir(2, 810, 102)
+fila5.inserir(3, 820, 103)
+
+print("Antes:")
+fila5.mostrar()
+
+print("Atualizou:", fila5.atualizar_prioridade(101, 1))
+print("Depois de ficar mais urgente:")
+fila5.mostrar()
+
+print("Atualizou:", fila5.atualizar_prioridade(101, 5))
+print("Depois de ficar menos urgente:")
+fila5.mostrar()
+
+print("Paciente inexistente:", fila5.atualizar_prioridade(999, 1))
+print("Prioridade invalida:", fila5.atualizar_prioridade(102, 8))
