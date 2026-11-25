@@ -126,3 +126,26 @@ print("Paciente cancelado:", fila8.remover_por_id(103))
 print("Pacientes restantes em ordem:")
 while len(fila8.heap) > 0:
     print(fila8.remover())
+
+
+print("10- Atualizacao e cancelamento juntos")
+
+fila9 = HeapBinario()
+
+fila9.inserir(3, 800, 101)
+fila9.inserir(4, 810, 102)
+fila9.inserir(2, 820, 103)
+fila9.inserir(5, 830, 104)
+
+print("Fila inicial:")
+fila9.mostrar()
+
+print("Atualizando paciente 102 para prioridade 1")
+fila9.atualizar_prioridade(102, 1)
+
+print("Cancelando paciente 103")
+print("Cancelado:", fila9.remover_por_id(103))
+
+print("Ordem final de atendimento:")
+while len(fila9.heap) > 0:
+    print(fila9.remover())
