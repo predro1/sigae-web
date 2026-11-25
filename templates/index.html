@@ -4,18 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGAE WEB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>SIGAE WEB</h1>
-    <p>Sistema de gerenciamento de atendimentos médicos</p>
 
-    <nav>
-        <button>Início</button>
-        <button>Pacientes</button>
-        <button>Triagem</button>
-        <button>Médicos</button>
-        <button>Atendimentos</button>
-        <button>Histórico</button>
-    </nav>
+    <aside class="sidebar">
+        <h2>SIGAE WEB</h2>
+        <p>Sistema de atendimento</p>
+
+        <nav>
+            <button class="ativo">Início</button>
+            <button>Pacientes</button>
+            <button>Triagem</button>
+            <button>Médicos</button>
+            <button>Atendimentos</button>
+            <button>Histórico</button>
+        </nav>
+    </aside>
+
+    <main class="conteudo">
+
+        <header>
+            <h1>Painel geral</h1>
+            <p>Gerenciamento de atendimentos médicos</p>
+        </header>
+
+        <section class="indicadores">
+
+            <div class="card">
+                <h3>Pacientes cadastrados</h3>
+                <span>0</span>
+            </div>
+
+            <div class="card">
+                <h3>Aguardando triagem</h3>
+                <span>0</span>
+            </div>
+
+            <div class="card">
+                <h3>Médicos disponíveis</h3>
+                <span>0</span>
+            </div>
+
+            <div class="card">
+                <h3>Atendimentos realizados</h3>
+                <span>0</span>
+            </div>
+
+        </section>
+
+        <section class="painel">
+            <h2>Fila de atendimento</h2>
+            <p>Nenhum paciente na fila.</p>
+        </section>
+
+    </main>
+
 </body>
 </html>
