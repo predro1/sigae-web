@@ -26,3 +26,19 @@ print("Primeiro medico:", fila2.remover())
 print("Segundo medico:", fila2.remover())
 print("Terceiro medico:", fila2.remover())
 print("Fila vazia:", fila2.remover())
+
+
+
+print("3- Desempate entre medicos")
+
+fila3 = HeapMedicos()
+
+fila3.inserir(103, 2, 10)
+fila3.inserir(102, 2, 5)
+fila3.inserir(101, 2, 5)
+
+print("Ordem de escolha:")
+
+print(fila3.remover())
+print(fila3.remover())
+print(fila3.remover())
