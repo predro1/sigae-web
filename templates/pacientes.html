@@ -35,7 +35,7 @@
                 <p class="mensagem-erro">{{ mensagem }}</p>
             {% endif %}
 
-            <form method="POST">
+            <form method="POST" action="{{ url_for('pacientes') }}">
                 <label for="id">ID do paciente</label>
                 <input type="number" id="id" name="id"
                        min="1" placeholder="Digite o ID" required>
@@ -48,6 +48,33 @@
                     Cadastrar paciente
                 </button>
             </form>
+        </section>
+
+        <section class="painel">
+            <h2>Buscar paciente</h2>
+
+            <form method="GET" action="{{ url_for('buscar_paciente') }}">
+                <label for="id_busca">ID do paciente</label>
+
+                <input type="number" id="id_busca" name="id"
+                       min="1" placeholder="Digite o ID" required>
+
+                <button type="submit" class="btn-principal">
+                    Buscar paciente
+                </button>
+            </form>
+
+            {% if paciente_encontrado %}
+                <div class="mensagem-sucesso">
+                    <strong>Paciente encontrado!</strong>
+                    <p>ID: {{ paciente_encontrado[0] }}</p>
+                    <p>Nome: {{ paciente_encontrado[1] }}</p>
+                </div>
+            {% endif %}
+
+            {% if mensagem_busca %}
+                <p class="mensagem-erro">{{ mensagem_busca }}</p>
+            {% endif %}
         </section>
 
         <section class="painel">
