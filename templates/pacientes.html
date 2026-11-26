@@ -94,7 +94,12 @@
                         <tr>
                             <td>{{ paciente[0] }}</td>
                             <td>{{ paciente[1] }}</td>
-                            <td>-</td>
+                            <td>
+                                <a href="{{ url_for('editar_paciente', id=paciente[0]) }}"
+                                   class="btn-editar">
+                                    Editar
+                                </a>
+                            </td>
                         </tr>
                     {% else %}
                         <tr>

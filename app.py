@@ -74,6 +74,33 @@ def buscar_paciente():
     )
 
 
+# Edicao de pacientes
+@app.route("/pacientes/editar/<int:id>", methods=["GET", "POST"])
+def editar_paciente(id):
+    paciente = tabela_pacientes.buscar(id)
+
+    if paciente is None:
+        return redirect(url_for("pacientes"))
+
+    mensagem = ""
+
+    if request.method == "POST":
+        novo_nome = request.form.get("nome", "").strip()
+
+        if not novo_nome:
+            mensagem = "Informe um nome válido."
+
+        else:
+            tabela_pacientes.atualizar(id, novo_nome)
+            return redirect(url_for("pacientes"))
+
+    return render_template(
+        "editar_paciente.html",
+        paciente=paciente,
+        mensagem=mensagem
+    )
+
+
 @app.route("/triagem")
 def triagem():
     return render_template("pagina.html", titulo="Triagem")
