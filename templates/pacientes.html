@@ -95,10 +95,24 @@
                             <td>{{ paciente[0] }}</td>
                             <td>{{ paciente[1] }}</td>
                             <td>
-                                <a href="{{ url_for('editar_paciente', id=paciente[0]) }}"
-                                   class="btn-editar">
-                                    Editar
-                                </a>
+                                <div class="acoes">
+
+                                    <a href="{{ url_for('editar_paciente', id=paciente[0]) }}"
+                                       class="btn-editar">
+                                        Editar
+                                    </a>
+
+                                    <form method="POST"
+                                          action="{{ url_for('excluir_paciente', id=paciente[0]) }}"
+                                          onsubmit="return confirm('Deseja realmente excluir este paciente?');">
+
+                                        <button type="submit" class="btn-excluir">
+                                            Excluir
+                                        </button>
+
+                                    </form>
+
+                                </div>
                             </td>
                         </tr>
                     {% else %}

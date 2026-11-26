@@ -120,6 +120,16 @@ def atendimentos():
 def historico():
     return render_template("pagina.html", titulo="Histórico")
 
+# Exclusao de pacientes
+@app.route("/pacientes/excluir/<int:id>", methods=["POST"])
+def excluir_paciente(id):
+    paciente = tabela_pacientes.buscar(id)
+
+    if paciente is not None:
+        tabela_pacientes.remover(id)
+
+    return redirect(url_for("pacientes"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

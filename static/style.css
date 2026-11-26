@@ -274,3 +274,30 @@ tbody tr:hover {
         overflow-x: auto;
     }
 }
+
+/* Exclusao de pacientes */
+
+.acoes {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.acoes form {
+    margin: 0;
+}
+
+.btn-excluir {
+    background-color: #dc2626;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-excluir:hover {
+    background-color: #b91c1c;
+}
