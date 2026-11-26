@@ -200,5 +200,24 @@ def excluir_paciente(id):
 
     return redirect(url_for("pacientes"))
 
+# Alteracao de prioridade na triagem
+@app.route("/triagem/alterar/<int:id>", methods=["POST"])
+def alterar_prioridade(id):
+    nova_prioridade = request.form.get("prioridade", type=int)
+
+    if nova_prioridade in range(1, 6):
+        fila_triagem.atualizar_prioridade(id, nova_prioridade)
+
+    return redirect(url_for("triagem"))
+
+
+# Remocao de pacientes da fila
+@app.route("/triagem/remover/<int:id>", methods=["POST"])
+def remover_triagem(id):
+    fila_triagem.remover_por_id(id)
+
+    return redirect(url_for("triagem"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)

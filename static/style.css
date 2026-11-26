@@ -358,3 +358,37 @@ select:focus {
     color: #1d4ed8;
 }
 
+/* Acoes da triagem */
+
+.acoes-triagem {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.acoes-triagem form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.acoes-triagem select {
+    min-width: 140px;
+    padding: 8px;
+    font-size: 13px;
+}
+
+.btn-alterar {
+    background-color: #2563eb;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-alterar:hover {
+    background-color: #1d4ed8;
+}
