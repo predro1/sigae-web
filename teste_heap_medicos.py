@@ -155,3 +155,17 @@ for numero in range(1, 7):
 print("Fila depois dos atendimentos:")
 fila8.mostrar()
 
+
+print("9- Medicos com cargas diferentes")
+
+fila9 = HeapMedicos()
+
+fila9.inserir(101, 5, 10)
+fila9.inserir(102, 2, 8)
+fila9.inserir(103, 3, 5)
+fila9.inserir(104, 1, 12)
+
+print("Ordem de escolha:")
+
+while len(fila9.heap) > 0:
+    print(fila9.remover())
