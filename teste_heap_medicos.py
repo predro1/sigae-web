@@ -112,3 +112,22 @@ print("Fila depois do cancelamento:")
 fila6.mostrar()
 
 print("Proximo medico escolhido:", fila6.remover())
+
+
+
+print("7- Todos os medicos ocupados")
+
+fila7 = HeapMedicos()
+
+fila7.inserir(101, 0, 0)
+fila7.inserir(102, 0, 0)
+fila7.inserir(103, 0, 0)
+
+print("Primeiro medico:", fila7.remover())
+print("Segundo medico:", fila7.remover())
+print("Terceiro medico:", fila7.remover())
+
+print("Tentando chamar outro medico:", fila7.remover())
+
+print("Fila de medicos disponiveis:")
+fila7.mostrar()
