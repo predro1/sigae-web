@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triagem - SIGAE WEB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h2>SIGAE WEB</h2>
+        <p>Sistema de atendimento</p>
+
+        <nav>
+            <a href="/">Início</a>
+            <a href="/pacientes">Pacientes</a>
+            <a href="/triagem" class="ativo">Triagem</a>
+            <a href="/medicos">Médicos</a>
+            <a href="/atendimentos">Atendimentos</a>
+            <a href="/historico">Histórico</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo">
+        <header>
+            <h1>Triagem</h1>
+            <p>Classificação e gerenciamento da fila de atendimento</p>
+        </header>
+
+        <section class="painel">
+            <h2>Adicionar paciente à fila</h2>
+
+            {% if mensagem %}
+                <p class="mensagem-erro">{{ mensagem }}</p>
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('triagem') }}">
+
+                <label for="id">Paciente</label>
+
+                <select id="id" name="id" required>
+                    <option value="">Selecione um paciente</option>
+
+                    {% for paciente in pacientes %}
+                        <option value="{{ paciente[0] }}">
+                            {{ paciente[0] }} - {{ paciente[1] }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <label for="prioridade">Prioridade de atendimento</label>
+
+                <select id="prioridade" name="prioridade" required>
+                    <option value="">Selecione a prioridade</option>
+                    <option value="1">1 - Emergência</option>
+                    <option value="2">2 - Muito urgente</option>
+                    <option value="3">3 - Urgente</option>
+                    <option value="4">4 - Pouco urgente</option>
+                    <option value="5">5 - Não urgente</option>
+                </select>
+
+                <button type="submit" class="btn-principal"
+                        {% if not pacientes %}disabled{% endif %}>
+                    Adicionar à fila
+                </button>
+
+            </form>
+
+            {% if not pacientes %}
+                <p class="aviso-triagem">
+                    Cadastre um paciente antes de iniciar a triagem.
+                </p>
+            {% endif %}
+
+        </section>
+
+        <section class="painel">
+            <h2>Fila de atendimento ({{ fila|length }})</h2>
+
+            {% set prioridades = {
+                1: "Emergência",
+                2: "Muito urgente",
+                3: "Urgente",
+                4: "Pouco urgente",
+                5: "Não urgente"
+            } %}
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ordem</th>
+                        <th>ID</th>
+                        <th>Paciente</th>
+                        <th>Prioridade</th>
+                        <th>Horário de chegada</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for paciente in fila %}
+                        <tr>
+                            <td>{{ loop.index }}º</td>
+                            <td>{{ paciente.id }}</td>
+                            <td>{{ paciente.nome }}</td>
+
+                            <td>
+                                <span class="prioridade prioridade-{{ paciente.prioridade }}">
+                                    {{ paciente.prioridade }} - {{ prioridades[paciente.prioridade] }}
+                                </span>
+                            </td>
+
+                            <td>{{ paciente.horario }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">
+                                Nenhum paciente na fila de atendimento.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+</body>
+</html>

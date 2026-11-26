@@ -1,9 +1,12 @@
+from heap_binario import HeapBinario
+from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for
 from tabela_hash import TabelaHash
 
 app = Flask(__name__)
 
 tabela_pacientes = TabelaHash()
+fila_triagem = HeapBinario()
 
 
 @app.route("/")
@@ -101,9 +104,62 @@ def editar_paciente(id):
     )
 
 
-@app.route("/triagem")
+# Triagem de pacientes
+@app.route("/triagem", methods=["GET", "POST"])
 def triagem():
-    return render_template("pagina.html", titulo="Triagem")
+    mensagem = ""
+
+    if request.method == "POST":
+        id_paciente = request.form.get("id", type=int)
+        prioridade = request.form.get("prioridade", type=int)
+
+        paciente = tabela_pacientes.buscar(id_paciente) if id_paciente is not None else None
+
+        if paciente is None:
+            mensagem = "Paciente não encontrado."
+
+        elif prioridade not in range(1, 6):
+            mensagem = "Selecione uma prioridade válida."
+
+        elif any(item[2] == id_paciente for item in fila_triagem.heap):
+            mensagem = "Este paciente já está na fila de triagem."
+
+        else:
+            horario = datetime.now().isoformat()
+
+            fila_triagem.inserir(
+                prioridade,
+                horario,
+                id_paciente
+            )
+
+            return redirect(url_for("triagem"))
+
+    lista_pacientes = []
+
+    for lista in tabela_pacientes.tabela:
+        for paciente in lista:
+            lista_pacientes.append(paciente)
+
+    fila = []
+
+    for item in sorted(fila_triagem.heap):
+        paciente = tabela_pacientes.buscar(item[2])
+
+        if paciente is not None:
+            fila.append({
+                "prioridade": item[0],
+                "horario": item[1][11:19],
+                "id": item[2],
+                "nome": paciente[1]
+            })
+
+    return render_template(
+        "triagem.html",
+        pacientes=lista_pacientes,
+        fila=fila,
+        mensagem=mensagem
+    )
 
 
 @app.route("/medicos")
@@ -125,11 +181,24 @@ def historico():
 def excluir_paciente(id):
     paciente = tabela_pacientes.buscar(id)
 
+    if any(item[2] == id for item in fila_triagem.heap):
+
+        lista_pacientes = []
+
+        for lista in tabela_pacientes.tabela:
+            for paciente_cadastrado in lista:
+                lista_pacientes.append(paciente_cadastrado)
+
+        return render_template(
+            "pacientes.html",
+            pacientes=lista_pacientes,
+            mensagem="Não é possível excluir um paciente que está na fila de atendimento."
+        )
+
     if paciente is not None:
         tabela_pacientes.remover(id)
 
     return redirect(url_for("pacientes"))
-
 
 if __name__ == "__main__":
     app.run(debug=True)
