@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Médicos - SIGAE WEB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h2>SIGAE WEB</h2>
+        <p>Sistema de atendimento</p>
+
+        <nav>
+            <a href="/">Início</a>
+            <a href="/pacientes">Pacientes</a>
+            <a href="/triagem">Triagem</a>
+            <a href="/medicos" class="ativo">Médicos</a>
+            <a href="/atendimentos">Atendimentos</a>
+            <a href="/historico">Histórico</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo">
+
+        <header>
+            <h1>Médicos</h1>
+            <p>Gerenciamento da equipe médica</p>
+        </header>
+
+        <section class="painel">
+            <h2>Cadastrar médico</h2>
+
+            {% if mensagem %}
+                <p class="mensagem-erro">{{ mensagem }}</p>
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('medicos') }}">
+
+                <label for="id">ID do médico</label>
+                <input type="number" id="id" name="id"
+                       min="1" placeholder="Informe o ID" required>
+
+                <label for="nome">Nome do médico</label>
+                <input type="text" id="nome" name="nome"
+                       placeholder="Informe o nome" required>
+
+                <button type="submit" class="btn-principal">
+                    Cadastrar médico
+                </button>
+
+            </form>
+        </section>
+
+        <section class="painel">
+
+            <h2>Médicos cadastrados ({{ medicos|length }})</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Médico</th>
+                        <th>Atendimentos realizados</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for medico in medicos %}
+                        <tr>
+                            <td>{{ medico.id }}</td>
+                            <td>{{ medico.nome }}</td>
+                            <td>{{ medico.atendimentos }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">
+                                Nenhum médico cadastrado.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

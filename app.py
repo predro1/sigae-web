@@ -1,3 +1,4 @@
+from heap_medicos import HeapMedicos
 from heap_binario import HeapBinario
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for
@@ -7,6 +8,8 @@ app = Flask(__name__)
 
 tabela_pacientes = TabelaHash()
 fila_triagem = HeapBinario()
+fila_medicos = HeapMedicos()
+cadastro_medicos = {}
 
 
 @app.route("/")
@@ -162,9 +165,43 @@ def triagem():
     )
 
 
-@app.route("/medicos")
+# Cadastro e listagem de medicos
+@app.route("/medicos", methods=["GET", "POST"])
 def medicos():
-    return render_template("pagina.html", titulo="Médicos")
+    mensagem = ""
+
+    if request.method == "POST":
+        id_medico = request.form.get("id", type=int)
+        nome = request.form.get("nome", "").strip()
+
+        if id_medico is None or id_medico <= 0 or not nome:
+            mensagem = "Preencha os campos corretamente."
+
+        elif id_medico in cadastro_medicos:
+            mensagem = "Já existe um médico com esse ID."
+
+        else:
+            if fila_medicos.inserir(id_medico):
+                cadastro_medicos[id_medico] = nome
+                return redirect(url_for("medicos"))
+
+            mensagem = "Não foi possível cadastrar o médico."
+
+    lista_medicos = []
+
+    for medico in sorted(fila_medicos.heap):
+        lista_medicos.append({
+            "id": medico[2],
+            "nome": cadastro_medicos[medico[2]],
+            "atendimentos": medico[0]
+        })
+
+    return render_template(
+        "medicos.html",
+        medicos=lista_medicos,
+        mensagem=mensagem
+    )
+
 
 
 @app.route("/atendimentos")
