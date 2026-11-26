@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }} - SIGAE WEB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h2>SIGAE WEB</h2>
+        <p>Sistema de atendimento</p>
+
+        <nav>
+            <a href="/">Início</a>
+            <a href="/pacientes">Pacientes</a>
+            <a href="/triagem">Triagem</a>
+            <a href="/medicos">Médicos</a>
+            <a href="/atendimentos">Atendimentos</a>
+            <a href="/historico">Histórico</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo">
+        <header>
+            <h1>{{ titulo }}</h1>
+            <p>Gerenciamento de atendimentos médicos</p>
+        </header>
+
+        <section class="painel">
+            <h2>{{ titulo }}</h2>
+            <p>Funcionalidade em desenvolvimento.</p>
+        </section>
+    </main>
+
+</body>
+</html>

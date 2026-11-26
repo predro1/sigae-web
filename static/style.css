@@ -124,3 +124,17 @@ header p {
         padding: 20px;
     }
 }
+
+nav a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+nav a:hover,
+nav a.ativo {
+    background-color: #0f766e;
+}
