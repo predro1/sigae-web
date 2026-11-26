@@ -131,3 +131,27 @@ print("Tentando chamar outro medico:", fila7.remover())
 
 print("Fila de medicos disponiveis:")
 fila7.mostrar()
+
+
+
+print("8- Balanceamento entre medicos")
+
+fila8 = HeapMedicos()
+
+fila8.inserir(101, 0, 0)
+fila8.inserir(102, 0, 0)
+fila8.inserir(103, 0, 0)
+
+for numero in range(1, 7):
+    medico = fila8.remover()
+
+    print("Atendimento", numero, "- Medico:", medico[2])
+
+    medico[0] += 1
+    medico[1] = numero
+
+    fila8.inserir(medico[2], medico[0], medico[1])
+
+print("Fila depois dos atendimentos:")
+fila8.mostrar()
+
