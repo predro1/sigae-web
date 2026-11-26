@@ -61,3 +61,27 @@ print("Proximo medico:", fila4.remover())
 
 print("Medico ocupado continua fora da fila:")
 fila4.mostrar()
+
+
+
+print("5- Medico voltando apos concluir atendimento")
+
+fila5 = HeapMedicos()
+
+fila5.inserir(101, 0, 0)
+fila5.inserir(102, 0, 0)
+fila5.inserir(103, 0, 0)
+
+medico = fila5.remover()
+
+print("Medico chamado:", medico)
+
+medico[0] += 1
+medico[1] = 1
+
+fila5.inserir(medico[2], medico[0], medico[1])
+
+print("Fila depois da conclusao:")
+fila5.mostrar()
+
+print("Proximo medico escolhido:", fila5.remover())
