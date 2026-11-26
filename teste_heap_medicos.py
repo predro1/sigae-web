@@ -42,3 +42,22 @@ print("Ordem de escolha:")
 print(fila3.remover())
 print(fila3.remover())
 print(fila3.remover())
+
+
+
+print("4- Medico ocupado")
+
+fila4 = HeapMedicos()
+
+fila4.inserir(101, 0, 0)
+fila4.inserir(102, 0, 0)
+fila4.inserir(103, 0, 0)
+
+medico_ocupado = fila4.remover()
+
+print("Medico em atendimento:", medico_ocupado)
+
+print("Proximo medico:", fila4.remover())
+
+print("Medico ocupado continua fora da fila:")
+fila4.mostrar()
