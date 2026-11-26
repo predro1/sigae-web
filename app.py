@@ -10,6 +10,8 @@ tabela_pacientes = TabelaHash()
 fila_triagem = HeapBinario()
 fila_medicos = HeapMedicos()
 cadastro_medicos = {}
+lista_atendimentos = []
+contador_atribuicoes = 0
 
 
 @app.route("/")
@@ -204,9 +206,60 @@ def medicos():
 
 
 
-@app.route("/atendimentos")
+# Gerenciamento de atendimentos
+@app.route("/atendimentos", methods=["GET", "POST"])
 def atendimentos():
-    return render_template("pagina.html", titulo="Atendimentos")
+    global contador_atribuicoes
+
+    mensagem = ""
+
+    if request.method == "POST":
+
+        if not fila_triagem.heap:
+            mensagem = "Não há pacientes na fila de atendimento."
+
+        elif not fila_medicos.heap:
+            mensagem = "Não há médicos cadastrados."
+
+        else:
+            paciente = fila_triagem.remover()
+            medico = fila_medicos.remover()
+
+            id_paciente = paciente[2]
+            id_medico = medico[2]
+
+            dados_paciente = tabela_pacientes.buscar(id_paciente)
+
+            contador_atribuicoes += 1
+
+            atendimento = {
+                "id": contador_atribuicoes,
+                "paciente": dados_paciente[1],
+                "id_paciente": id_paciente,
+                "medico": cadastro_medicos[id_medico],
+                "id_medico": id_medico,
+                "prioridade": paciente[0],
+                "horario": datetime.now().strftime("%H:%M:%S")
+            }
+
+            lista_atendimentos.append(atendimento)
+
+            fila_medicos.inserir(
+                id_medico,
+                medico[0] + 1,
+                contador_atribuicoes
+            )
+
+            return redirect(url_for("atendimentos"))
+
+    return render_template(
+        "atendimentos.html",
+        atendimentos=lista_atendimentos,
+        pacientes_aguardando=len(fila_triagem.heap),
+        medicos_disponiveis=len(fila_medicos.heap),
+        mensagem=mensagem
+    )
+
 
 
 @app.route("/historico")
