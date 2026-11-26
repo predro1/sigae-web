@@ -206,3 +206,10 @@ th {
 td {
     font-size: 14px;
 }
+
+.mensagem-erro {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 12px;
+    border-radius: 6px;
+}
