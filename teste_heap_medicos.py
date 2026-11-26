@@ -85,3 +85,30 @@ print("Fila depois da conclusao:")
 fila5.mostrar()
 
 print("Proximo medico escolhido:", fila5.remover())
+
+
+
+print("6- Medico voltando apos cancelamento")
+
+fila6 = HeapMedicos()
+
+fila6.inserir(101, 0, 0)
+fila6.inserir(102, 0, 0)
+fila6.inserir(103, 0, 0)
+
+medico_cancelado = fila6.remover()
+
+print("Medico chamado:", medico_cancelado)
+
+medico_cancelado[1] = 1
+
+fila6.inserir(
+    medico_cancelado[2],
+    medico_cancelado[0],
+    medico_cancelado[1]
+)
+
+print("Fila depois do cancelamento:")
+fila6.mostrar()
+
+print("Proximo medico escolhido:", fila6.remover())
