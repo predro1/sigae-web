@@ -8,7 +8,7 @@ def inicio():
 
 @app.route("/pacientes")
 def pacientes():
-    return render_template("pagina.html", titulo="Pacientes")
+    return render_template("pacientes.html")
 
 @app.route("/triagem")
 def triagem():

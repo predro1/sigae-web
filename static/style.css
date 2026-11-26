@@ -138,3 +138,71 @@ nav a:hover,
 nav a.ativo {
     background-color: #0f766e;
 }
+
+/* Formulários */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+form label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+form input:focus {
+    outline: 2px solid #0f766e;
+}
+
+.btn-principal {
+    background-color: #0f766e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 14px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-principal:hover {
+    background-color: #115e59;
+}
+
+.btn-principal:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Tabelas */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    text-align: left;
+    padding: 14px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+td {
+    font-size: 14px;
+}
