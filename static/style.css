@@ -392,3 +392,26 @@ select:focus {
 .btn-alterar:hover {
     background-color: #1d4ed8;
 }
+
+/* Atalhos do dashboard */
+
+.atalhos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.btn-atalho {
+    display: inline-block;
+    background-color: #0f766e;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.btn-atalho:hover {
+    background-color: #134e4a;
+}

@@ -12,50 +12,124 @@
         <h2>SIGAE WEB</h2>
         <p>Sistema de atendimento</p>
 
-            <nav>
-    <a href="/" class="ativo">Início</a>
-    <a href="/pacientes">Pacientes</a>
-    <a href="/triagem">Triagem</a>
-    <a href="/medicos">Médicos</a>
-    <a href="/atendimentos">Atendimentos</a>
-    <a href="/historico">Histórico</a>
-            </nav>
+        <nav>
+            <a href="/" class="ativo">Início</a>
+            <a href="/pacientes">Pacientes</a>
+            <a href="/triagem">Triagem</a>
+            <a href="/medicos">Médicos</a>
+            <a href="/atendimentos">Atendimentos</a>
+            <a href="/historico">Histórico</a>
+        </nav>
     </aside>
 
     <main class="conteudo">
 
         <header>
-            <h1>Painel geral</h1>
-            <p>Gerenciamento de atendimentos médicos</p>
+            <h1>Painel de controle</h1>
+            <p>Acompanhe os indicadores do sistema de atendimento</p>
         </header>
 
         <section class="indicadores">
 
             <div class="card">
                 <h3>Pacientes cadastrados</h3>
-                <span>0</span>
+                <p>{{ total_pacientes }}</p>
             </div>
 
             <div class="card">
-                <h3>Aguardando triagem</h3>
-                <span>0</span>
+                <h3>Aguardando atendimento</h3>
+                <p>{{ pacientes_aguardando }}</p>
             </div>
 
             <div class="card">
                 <h3>Médicos disponíveis</h3>
-                <span>0</span>
+                <p>{{ medicos_disponiveis }}</p>
             </div>
 
             <div class="card">
                 <h3>Atendimentos realizados</h3>
-                <span>0</span>
+                <p>{{ atendimentos_realizados }}</p>
             </div>
 
         </section>
 
         <section class="painel">
+
             <h2>Fila de atendimento</h2>
-            <p>Nenhum paciente na fila.</p>
+
+            {% set prioridades = {
+                1: "Emergência",
+                2: "Muito urgente",
+                3: "Urgente",
+                4: "Pouco urgente",
+                5: "Não urgente"
+            } %}
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ordem</th>
+                        <th>ID</th>
+                        <th>Paciente</th>
+                        <th>Prioridade</th>
+                        <th>Horário de chegada</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for paciente in fila %}
+                        <tr>
+                            <td>{{ loop.index }}º</td>
+                            <td>{{ paciente.id }}</td>
+                            <td>{{ paciente.nome }}</td>
+
+                            <td>
+                                <span class="prioridade prioridade-{{ paciente.prioridade }}">
+                                    {{ paciente.prioridade }} -
+                                    {{ prioridades[paciente.prioridade] }}
+                                </span>
+                            </td>
+
+                            <td>{{ paciente.horario }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">
+                                Nenhum paciente aguardando atendimento.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </section>
+
+        <section class="painel">
+
+            <h2>Acesso rápido</h2>
+
+            <div class="atalhos">
+                <a href="/pacientes" class="btn-atalho">
+                    Cadastrar paciente
+                </a>
+
+                <a href="/triagem" class="btn-atalho">
+                    Realizar triagem
+                </a>
+
+                <a href="/medicos" class="btn-atalho">
+                    Cadastrar médico
+                </a>
+
+                <a href="/atendimentos" class="btn-atalho">
+                    Realizar atendimento
+                </a>
+
+                <a href="/historico" class="btn-atalho">
+                    Consultar histórico
+                </a>
+            </div>
+
         </section>
 
     </main>

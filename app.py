@@ -18,7 +18,28 @@ arvore_historico = ArvoreRubroNegra()
 
 @app.route("/")
 def inicio():
-    return render_template("index.html")
+    fila = []
+
+    for item in sorted(fila_triagem.heap):
+        paciente = tabela_pacientes.buscar(item[2])
+
+        if paciente is not None:
+            fila.append({
+                "id": item[2],
+                "nome": paciente[1],
+                "prioridade": item[0],
+                "horario": item[1][11:19]
+            })
+
+    return render_template(
+        "index.html",
+        total_pacientes=tabela_pacientes.quantidade,
+        pacientes_aguardando=len(fila_triagem.heap),
+        medicos_disponiveis=len(fila_medicos.heap),
+        atendimentos_realizados=len(arvore_historico.indice_por_id),
+        fila=fila
+    )
+
 
 
 # Cadastro e listagem de pacientes
