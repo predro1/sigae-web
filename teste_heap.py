@@ -49,3 +49,103 @@ fila4.inserir(1, 800, 104)
 
 print("Paciente removido:", fila4.remover())
 fila4.mostrar()
+
+
+print("6- Atualizando prioridade")
+
+fila5 = HeapBinario()
+fila5.inserir(4, 800, 101)
+fila5.inserir(2, 810, 102)
+fila5.inserir(3, 820, 103)
+
+print("Antes:")
+fila5.mostrar()
+
+print("Atualizou:", fila5.atualizar_prioridade(101, 1))
+print("Depois de ficar mais urgente:")
+fila5.mostrar()
+
+print("Atualizou:", fila5.atualizar_prioridade(101, 5))
+print("Depois de ficar menos urgente:")
+fila5.mostrar()
+
+print("Paciente inexistente:", fila5.atualizar_prioridade(999, 1))
+print("Prioridade invalida:", fila5.atualizar_prioridade(102, 8))
+
+
+print("7- Removendo paciente por ID")
+
+fila6 = HeapBinario()
+
+fila6.inserir(3, 800, 101)
+fila6.inserir(1, 810, 102)
+fila6.inserir(2, 820, 103)
+
+print("Antes:")
+fila6.mostrar()
+
+print("Removido:", fila6.remover_por_id(103))
+
+print("Depois:")
+fila6.mostrar()
+
+print("ID inexistente:", fila6.remover_por_id(999))
+print("Proximo paciente:", fila6.remover())
+
+
+
+print("8- Testando ordem de remocao")
+
+fila7 = HeapBinario()
+
+fila7.inserir(3, 900, 101)
+fila7.inserir(1, 850, 102)
+fila7.inserir(2, 800, 103)
+fila7.inserir(1, 800, 104)
+fila7.inserir(1, 800, 100)
+
+print("Ordem dos pacientes removidos:")
+
+while len(fila7.heap) > 0:
+    print(fila7.remover())
+
+
+
+print("9- Remocao de paciente no meio da fila")
+
+fila8 = HeapBinario()
+
+fila8.inserir(1, 800, 101)
+fila8.inserir(2, 810, 102)
+fila8.inserir(3, 820, 103)
+fila8.inserir(4, 830, 104)
+fila8.inserir(5, 840, 105)
+
+print("Paciente cancelado:", fila8.remover_por_id(103))
+
+print("Pacientes restantes em ordem:")
+while len(fila8.heap) > 0:
+    print(fila8.remover())
+
+
+print("10- Atualizacao e cancelamento juntos")
+
+fila9 = HeapBinario()
+
+fila9.inserir(3, 800, 101)
+fila9.inserir(4, 810, 102)
+fila9.inserir(2, 820, 103)
+fila9.inserir(5, 830, 104)
+
+print("Fila inicial:")
+fila9.mostrar()
+
+print("Atualizando paciente 102 para prioridade 1")
+fila9.atualizar_prioridade(102, 1)
+
+print("Cancelando paciente 103")
+print("Cancelado:", fila9.remover_por_id(103))
+
+print("Ordem final de atendimento:")
+while len(fila9.heap) > 0:
+    print(fila9.remover())
