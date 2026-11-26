@@ -169,3 +169,35 @@ print("Ordem de escolha:")
 
 while len(fila9.heap) > 0:
     print(fila9.remover())
+
+
+
+print("10- Chamada, cancelamento e conclusao")
+
+fila10 = HeapMedicos()
+
+fila10.inserir(101, 0, 0)
+fila10.inserir(102, 0, 0)
+fila10.inserir(103, 0, 0)
+
+medico1 = fila10.remover()
+print("Primeiro medico chamado:", medico1)
+
+medico1[1] = 1
+fila10.inserir(medico1[2], medico1[0], medico1[1])
+
+print("Medico devolvido apos cancelamento")
+
+medico2 = fila10.remover()
+print("Segundo medico chamado:", medico2)
+
+medico2[0] += 1
+medico2[1] = 2
+fila10.inserir(medico2[2], medico2[0], medico2[1])
+
+print("Medico devolvido apos conclusao")
+
+print("Proximo medico escolhido:", fila10.remover())
+
+print("Fila restante:")
+fila10.mostrar()
