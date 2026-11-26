@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico - SIGAE WEB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h2>SIGAE WEB</h2>
+        <p>Sistema de atendimento</p>
+
+        <nav>
+            <a href="/">Início</a>
+            <a href="/pacientes">Pacientes</a>
+            <a href="/triagem">Triagem</a>
+            <a href="/medicos">Médicos</a>
+            <a href="/atendimentos">Atendimentos</a>
+            <a href="/historico" class="ativo">Histórico</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo">
+
+        <header>
+            <h1>Histórico</h1>
+            <p>Registros armazenados na árvore rubro-negra</p>
+        </header>
+
+        <section class="indicadores">
+
+            <div class="card">
+                <h3>Total de registros</h3>
+                <p>{{ historico|length }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Rotações realizadas</h3>
+                <p>{{ informacoes.rotacoes }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Altura negra</h3>
+                <p>{{ informacoes.altura_negra }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Validação da árvore</h3>
+                <p>
+                    {% if informacoes.valida %}
+                        Válida
+                    {% else %}
+                        Inválida
+                    {% endif %}
+                </p>
+            </div>
+
+        </section>
+
+        <section class="painel">
+
+            <h2>Histórico de atendimentos</h2>
+
+            {% set prioridades = {
+                1: "Emergência",
+                2: "Muito urgente",
+                3: "Urgente",
+                4: "Pouco urgente",
+                5: "Não urgente"
+            } %}
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID do atendimento</th>
+                        <th>ID do paciente</th>
+                        <th>Paciente</th>
+                        <th>Médico responsável</th>
+                        <th>Prioridade</th>
+                        <th>Horário</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for atendimento in historico %}
+                        <tr>
+                            <td>{{ atendimento.id }}</td>
+                            <td>{{ atendimento.id_paciente }}</td>
+                            <td>{{ atendimento.paciente }}</td>
+                            <td>{{ atendimento.medico }}</td>
+
+                            <td>
+                                <span class="prioridade prioridade-{{ atendimento.prioridade }}">
+                                    {{ atendimento.prioridade }} -
+                                    {{ prioridades[atendimento.prioridade] }}
+                                </span>
+                            </td>
+
+                            <td>{{ atendimento.horario }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">
+                                Nenhum atendimento registrado no histórico.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if informacoes.valida %}
+                <div class="mensagem-sucesso">
+                    As propriedades da árvore rubro-negra foram validadas.
+                </div>
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</body>
+</html>

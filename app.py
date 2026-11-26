@@ -3,6 +3,7 @@ from heap_binario import HeapBinario
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for
 from tabela_hash import TabelaHash
+from rubro_negra import ArvoreRubroNegra
 
 app = Flask(__name__)
 
@@ -12,6 +13,7 @@ fila_medicos = HeapMedicos()
 cadastro_medicos = {}
 lista_atendimentos = []
 contador_atribuicoes = 0
+arvore_historico = ArvoreRubroNegra()
 
 
 @app.route("/")
@@ -205,7 +207,6 @@ def medicos():
     )
 
 
-
 # Gerenciamento de atendimentos
 @app.route("/atendimentos", methods=["GET", "POST"])
 def atendimentos():
@@ -232,6 +233,8 @@ def atendimentos():
 
             contador_atribuicoes += 1
 
+            agora = datetime.now()
+
             atendimento = {
                 "id": contador_atribuicoes,
                 "paciente": dados_paciente[1],
@@ -239,11 +242,21 @@ def atendimentos():
                 "medico": cadastro_medicos[id_medico],
                 "id_medico": id_medico,
                 "prioridade": paciente[0],
-                "horario": datetime.now().strftime("%H:%M:%S")
+                "horario": agora.strftime("%H:%M:%S")
             }
+
+            # Registro na arvore rubro-negra
+            horario_min = agora.hour * 60 + agora.minute
+
+            arvore_historico.inserir(
+                horario_min,
+                atendimento["id"],
+                atendimento
+            )
 
             lista_atendimentos.append(atendimento)
 
+            # Atualizacao do heap de medicos
             fila_medicos.inserir(
                 id_medico,
                 medico[0] + 1,
@@ -261,10 +274,23 @@ def atendimentos():
     )
 
 
-
+# Historico de atendimentos pela arvore rubro-negra
 @app.route("/historico")
 def historico():
-    return render_template("pagina.html", titulo="Histórico")
+    registros = arvore_historico.ordem()
+
+    historico_atendimentos = [
+        registro["dados"] for registro in registros
+    ]
+
+    informacoes_arvore = arvore_historico.validar()
+
+    return render_template(
+        "historico.html",
+        historico=historico_atendimentos,
+        informacoes=informacoes_arvore
+    )
+
 
 # Exclusao de pacientes
 @app.route("/pacientes/excluir/<int:id>", methods=["POST"])
@@ -289,6 +315,7 @@ def excluir_paciente(id):
         tabela_pacientes.remover(id)
 
     return redirect(url_for("pacientes"))
+
 
 # Alteracao de prioridade na triagem
 @app.route("/triagem/alterar/<int:id>", methods=["POST"])
